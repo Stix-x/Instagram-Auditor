@@ -176,8 +176,12 @@ const generateAudit = async (username: string, bio: string, postUrl: string, com
     },
   });
   
-  const jsonText = response.text.trim();
-  const result = JSON.parse(jsonText);
+  const jsonText = response.text;
+  if (typeof jsonText !== 'string' || jsonText.trim() === '') {
+    throw new Error("Received an empty or invalid response from the AI model.");
+  }
+  
+  const result = JSON.parse(jsonText.trim());
   
   return result as InstagramAudit;
 };
