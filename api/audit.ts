@@ -1,3 +1,5 @@
+/// <reference types="node" />
+
 // This file should be placed in an /api directory.
 // When deployed to a platform like Vercel or Netlify, it will become a serverless function.
 
@@ -176,12 +178,12 @@ const generateAudit = async (username: string, bio: string, postUrl: string, com
     },
   });
   
-  const jsonText = response.text;
-  if (typeof jsonText !== 'string' || jsonText.trim() === '') {
+  const responseText = response.text;
+  if (!responseText) {
     throw new Error("Received an empty or invalid response from the AI model.");
   }
   
-  const result = JSON.parse(jsonText.trim());
+  const result = JSON.parse(responseText.trim());
   
   return result as InstagramAudit;
 };
